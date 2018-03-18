@@ -5,9 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-import {MatButtonModule, MatCheckboxModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatToolbarModule} from '@angular/material';
 import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import { CompanyEditComponent } from './company/company-edit/company-edit.component';
+import {CrmService} from './services/crm.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBtcZeM-omx_EDY8UFAIGd480y96OhKTc8",
@@ -20,19 +26,26 @@ const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CompanyEditComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    FlexLayoutModule,
     MatButtonModule,
     MatToolbarModule,
     MatCheckboxModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
   ],
-  providers: [],
+  providers: [CrmService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
