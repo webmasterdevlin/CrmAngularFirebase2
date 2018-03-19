@@ -7,11 +7,11 @@
 </div>
 <mat-card *ngFor="let contact of contacts$ | async" fxLayoutAlign="space-between center">
   <span>{{contact.name}}</span>
-  <button mat-raised-button [routerLink]="['/contact-edit', contact.$key]">
+  <button mat-raised-button color="primary" [routerLink]="['/contact-edit', contact.$key]">
     Edit
   </button>
 </mat-card>
-<button mat-raised-button [routerLink]="['/contact-edit/new']">
+<button mat-fab [routerLink]="['/contact-edit/new']">
   <mat-icon>
     add
   </mat-icon>
