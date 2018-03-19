@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <div fxLayoutAlign="space-between center" class="nav-buttons">
+   <button mat-raised-button color="accent" [routerLink]="['/home']">CRM NgRx and Fire 2</button>
+    <div *ngIf="!(authService.user$ | async)?.uid">
+      <button mat-raised-button color="accent" class="login" (click)="authService.login()">Login</button>
+    </div>
+    <div *ngIf="(authService.user$ | async)?.uid">
+      <button mat-raised-button color="accent" [routerLink]="['/company-list']">Companies</button>
+      <button mat-raised-button color="accent" [routerLink]="['/contact-list']">Contacts</button>
+      <button mat-raised-button color="accent" class="logout" (click)="authService.logout()">Logout</button>
+    </div>
+  </div>
+</mat-toolbar>
+<div>
+  <div fxFlexOffset.gt-sm="15%" fxFlex.gt-sm="70%">
+    <router-outlet></router-outlet>
+  </div>
+</div>
