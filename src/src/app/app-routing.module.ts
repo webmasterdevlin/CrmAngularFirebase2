@@ -5,7 +5,7 @@ import { CompanyEditComponent } from './company/company-edit/company-edit.compon
 import { ContactListComponent } from './contact/contact-list/contact-list.component';
 import { ContactEditComponent } from './contact/contact-edit/contact-edit.component';
 import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from './services/auth/auth.guard';
 
 const routes: Routes = [
 { path: '', pathMatch: 'full', redirectTo: 'home' },

@@ -6,7 +6,7 @@ import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
 
-import { IContact } from './contact';
+import { IContact } from '../models/contact';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
@@ -15,13 +15,13 @@ export class ContactService {
   contacts$: FirebaseListObservable<IContact[]>;
   contact$: FirebaseObjectObservable<IContact>;
 
-  constructor(private db: AngularFireDatabase) {
-    this.contact$ = this.db.object(`contact`);
-    this.contacts$ = this.db.list(`contacts`);
+  constructor(private _ngfDb: AngularFireDatabase) {
+    this.contact$ = this._ngfDb.object(`contact`);
+    this.contacts$ = this._ngfDb.list(`contacts`);
   }
 
   getContact(contactKey: string) {
-    return this.db.object(`contacts/${contactKey}`)
+    return this._ngfDb.object(`contacts/${contactKey}`)
       .catch(this.errorHandler);
   }
 
@@ -29,15 +29,15 @@ export class ContactService {
     return this.subject$
       .switchMap(companyKey => companyKey === undefined
         ? this.contacts$
-        : this.db.list(`companyContacts/${companyKey}`))
+        : this._ngfDb.list(`companyContacts/${companyKey}`))
       .catch(this.errorHandler);
   }
 
   // obs$: Observable<Observable[]>;
   companyContactsJoin(companyKey) {
-    return this.db.list(`companyContacts/${companyKey}`)
+    return this._ngfDb.list(`companyContacts/${companyKey}`)
       .map(contactKeys => contactKeys
-        .map(contact => this.db.object(`contacts/${contact.$key}`)))
+        .map(contact => this._ngfDb.object(`contacts/${contact.$key}`)))
       .switchMap(contactObsArray => contactObsArray.length >= 1
         ? Observable.combineLatest(contactObsArray)
         : Observable.of([]))
@@ -58,7 +58,7 @@ export class ContactService {
       updateContact[`companyContacts/${companyKey}/${contact.$key}`] = {name: contact.name};
     });
 
-    return this.db.object('/').update(updateContact)
+    return this._ngfDb.object('/').update(updateContact)
       .then(_ => console.log('success'))
       .catch(error => console.log(error));
   }
@@ -71,7 +71,7 @@ export class ContactService {
       removeContact[`companyContacts/${companyKey}/${contact.$key}`] = null;
     });
 
-    return this.db.object('/').update(removeContact)
+    return this._ngfDb.object('/').update(removeContact)
       .then(_ => console.log('success'))
       .catch(error => console.log(error));
   }

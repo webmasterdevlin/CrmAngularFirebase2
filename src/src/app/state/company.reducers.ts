@@ -1,5 +1,5 @@
 import * as CompanyActions from './company.actions';
-import { ICompany } from '../company/company';
+import { ICompany } from '../models/company';
 
 export function companyReducer(state = [], action) {
     switch (action.type) {

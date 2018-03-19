@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 
-import { CompanyService } from '../company/company.service';
+import { CompanyService } from '../services/company.service';
 import * as CompanyActions from './company.actions';
 
 import 'rxjs/add/observable/of';

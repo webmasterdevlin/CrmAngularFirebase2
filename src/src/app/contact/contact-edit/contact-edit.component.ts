@@ -1,12 +1,11 @@
 import * as firebase from 'firebase/app'; // typings only
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
-import { ContactService } from '../contact.service';
+import { ContactService } from '../../services/contact.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { IContact } from '../contact';
-import { CompanyService } from '../../company/company.service';
-import { ICompany } from '../../company/company';
+import { IContact } from '../../models/contact';
+import { CompanyService } from '../../services/company.service';
+import { ICompany } from '../../models/company';
 
 @Component({
   selector: 'dd-contact-edit',
@@ -22,14 +21,14 @@ export class ContactEditComponent implements OnInit {
   contactCompanies = [];
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private contactService: ContactService,
-    private companyService: CompanyService) { }
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute,
+    private _contactService: ContactService,
+    private _companyService: CompanyService) { }
 
   ngOnInit() {
-    this.companies$ = this.companyService.getCompanies();
-    this.contactKey = this.activatedRoute.snapshot.params['id'];
+    this.companies$ = this._companyService.getCompanies();
+    this.contactKey = this._activatedRoute.snapshot.params['id'];
     this.isNewContact = this.contactKey === 'new';
     if (!this.isNewContact) { this.getContact(); };
   }
@@ -47,7 +46,7 @@ export class ContactEditComponent implements OnInit {
   }
 
   getContact() {
-    this.contactService.getContact(this.contactKey)
+    this._contactService.getContact(this.contactKey)
       .subscribe(contact => {
         this.contact = contact;
         this.setContactCompanies();
@@ -61,14 +60,14 @@ export class ContactEditComponent implements OnInit {
 
   saveContact(contact) {
     const save = this.isNewContact
-      ? this.contactService.saveContact(contact)
-      : this.contactService.editContact(contact);
+      ? this._contactService.saveContact(contact)
+      : this._contactService.editContact(contact);
 
-    save.then(_ => this.router.navigate([`contact-list`]));
+    save.then(_ => this._router.navigate([`contact-list`]));
   }
 
   removeContact(contact) {
-    this.contactService.removeContact(contact)
-      .then(_ => this.router.navigate([`contact-list`]));
+    this._contactService.removeContact(contact)
+      .then(_ => this._router.navigate([`contact-list`]));
   }
 }

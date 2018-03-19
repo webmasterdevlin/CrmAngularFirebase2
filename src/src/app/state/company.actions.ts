@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ICompany } from '../company/company';
+import { ICompany } from '../models/company';
 
 export const DISCONNECT_COMPANIES = 'DISCONNECT_COMPANIES';
 export const DISCONNECT_COMPANIES_SUCCESS = 'DISCONNECT_COMPANIES_SUCCESS';

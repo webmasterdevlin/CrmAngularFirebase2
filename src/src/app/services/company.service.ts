@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import * as firebase from 'firebase/app';
 
-import * as CompanyActions from './../state/company.actions';
-import { ICompany } from './company';
+import * as CompanyActions from '../state/company.actions';
+import { ICompany } from '../models/company';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/take';
@@ -19,11 +19,11 @@ export class CompanyService {
   companiesEventsSubject: Subject<Action>;
   companiesRef: firebase.database.Reference;
 
-  constructor(private db: AngularFireDatabase) {
-    this.company$ = this.db.object(`company`);
-    this.companies$ = this.db.list(`companies`);
+  constructor(private _ngfDb: AngularFireDatabase) {
+    this.company$ = this._ngfDb.object(`company`);
+    this.companies$ = this._ngfDb.list(`companies`);
 
-    this.companiesRef = this.db.list(`companies`).$ref.ref;
+    this.companiesRef = this._ngfDb.list(`companies`).$ref.ref;
     this.companiesEventsSubject = new Subject<Action>();
   }
 
@@ -68,7 +68,7 @@ export class CompanyService {
   }
 
   getCompany(companyKey: string) {
-    return this.db.object(`companies/${companyKey}`)
+    return this._ngfDb.object(`companies/${companyKey}`)
       .catch(this.errorHandler);
   }
 

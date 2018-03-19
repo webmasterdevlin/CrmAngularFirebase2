@@ -1,4 +1,4 @@
-import { ICompany } from '../company/company';
+import { ICompany } from '../models/company';
 export interface AppState {
     companies: ICompany[];
 }
